@@ -10,6 +10,16 @@ def set_osu_directory(directory):
 	settings.save()
 
 
+def get_background_file(path):
+	with open(path) as file:
+		while file.readable():
+			line = file.readline()
+			if line.startswith("0,0,"):
+				return line.split(",")[2].strip("\"")
+
+	return None
+
+
 def main():
 	parser = argparse.ArgumentParser(description="Creates an osu thumbnail")
 	command_group = parser.add_mutually_exclusive_group()
@@ -30,7 +40,7 @@ def main():
 		beatmap_set_id = int(link_arguments[-2].split("#")[0])
 		print("Beatmap id:", beatmap_id, "Beatmap set id:", beatmap_set_id)
 
-		db = Database(settings["osu_dir"] + "osu!.db", beatmap_set_id, beatmap_id)
+		db = Database(settings["osu_dir"] + "osu.db", beatmap_set_id, beatmap_id)
 		print("Osu version:", db.version)
 		print("Folder count:", db.folder_count)
 		print("Account name:", db.account_name)
@@ -42,7 +52,8 @@ def main():
 			return
 
 		print(current_beatmap.song_title)
-
+		background_image = get_background_file(settings["osu_dir"] + "Songs/" + current_beatmap.folder_name + "/" + current_beatmap.file_name)
+		print(background_image)
 		return
 	parser.print_help()
 
