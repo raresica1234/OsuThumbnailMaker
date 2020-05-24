@@ -1,6 +1,7 @@
 import argparse
 from utils.settings import Settings
 from objects.database import Database
+from shutil import copyfile
 
 settings = Settings(".settings")
 
@@ -44,7 +45,7 @@ def main():
 		print("Osu version:", db.version)
 		print("Folder count:", db.folder_count)
 		print("Account name:", db.account_name)
-
+		song_path = settings["osu_dir"] + "Songs/"
 		current_beatmap = db.search_result
 
 		if current_beatmap == 0:
@@ -52,8 +53,14 @@ def main():
 			return
 
 		print(current_beatmap.song_title)
-		background_image = get_background_file(settings["osu_dir"] + "Songs/" + current_beatmap.folder_name + "/" + current_beatmap.file_name)
-		print(background_image)
+
+		background_image = get_background_file(song_path + current_beatmap.folder_name + "/" + current_beatmap.file_name)
+
+		if background_image is not None:
+			background_image = song_path + current_beatmap.folder_name + "/" + background_image
+			extension = background_image.split(".")[-1]
+			copyfile(background_image, "thumbnail." + extension)
+
 		return
 	parser.print_help()
 
