@@ -24,7 +24,7 @@ def main():
 		if settings["osu_dir"] is None:
 			print("Error: Osu directory is not set!")
 			parser.print_help()
-		db = Database(settings["osu_dir"] + "osu!.db")
+		db = Database(settings["osu_dir"] + "osu.db")
 		print("Osu version:", db.version)
 		print("Folder count:", db.folder_count)
 		print("Account name:", db.account_name)
