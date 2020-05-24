@@ -24,8 +24,6 @@ class Beatmap:
 		file.read(2) # spinner count
 		file.read(8) # modification time
 
-		print(self.file_name)
-
 		if osu_version < 20140609:
 			self.approach_rate = float(file.read(1))
 			self.circle_size = float(file.read(1))
@@ -36,8 +34,6 @@ class Beatmap:
 			self.circle_size = self.__parse_float()
 			self.hp_drain = self.__parse_float()
 			self.overall_difficulty = self.__parse_float()
-
-		print("AR:", self.approach_rate, "HP:", self.hp_drain, "CS:", self.circle_size, "OD:", self.overall_difficulty)
 
 		self.slider_velocity = self.__parse_double()
 		self.star_rating = {}
@@ -72,10 +68,10 @@ class Beatmap:
 				self.lowest_bpm = min(self.lowest_bpm, bpm)
 				self.highest_bpm = max(self.highest_bpm, bpm)
 
-		print("BPM: " + str(self.lowest_bpm) + " - " + str(self.highest_bpm))
 
-		file.read(4) # beatmap id
-		file.read(4) # beatmap set id
+		self.beatmap_id = self.__parse_int()
+		self.beatmap_set_id = self.__parse_int()
+
 		file.read(4) # thread id
 		file.read(4 * 1) # grade for std, taiko, ctb, mania
 		file.read(2) # local beatmap offset
