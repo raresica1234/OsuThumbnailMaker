@@ -3,3 +3,4 @@
 .idea
 *.sh
 __pycache__
+*.jpg
