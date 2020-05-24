@@ -84,6 +84,7 @@ class Beatmap:
 		CustomString(file, True) # song source
 		CustomString(file, True) # song tags
 		file.read(2) # online offset
+		CustomString(file, True) # font used for title of the song
 		file.read(1) # beatmap unplayed
 		file.read(8) # last time beatmap was played
 		file.read(1) # beatmap osz2
