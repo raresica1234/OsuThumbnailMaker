@@ -24,11 +24,25 @@ def main():
 		if settings["osu_dir"] is None:
 			print("Error: Osu directory is not set!")
 			parser.print_help()
-		db = Database(settings["osu_dir"] + "osu.db")
+
+		link_arguments = args.link.split("/")
+		beatmap_id = int(link_arguments[-1])
+		beatmap_set_id = int(link_arguments[-2].split("#")[0])
+		print("Beatmap id:", beatmap_id, "Beatmap set id:", beatmap_set_id)
+
+		db = Database(settings["osu_dir"] + "osu!.db", beatmap_set_id, beatmap_id)
 		print("Osu version:", db.version)
 		print("Folder count:", db.folder_count)
 		print("Account name:", db.account_name)
-		# TODO: parse link
+
+		current_beatmap = db.search_result
+
+		if current_beatmap == 0:
+			print("Beatmap not found!")
+			return
+
+		print(current_beatmap.song_title)
+
 		return
 	parser.print_help()
 
