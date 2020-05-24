@@ -68,7 +68,6 @@ class Beatmap:
 				self.lowest_bpm = min(self.lowest_bpm, bpm)
 				self.highest_bpm = max(self.highest_bpm, bpm)
 
-
 		self.beatmap_id = self.__parse_int()
 		self.beatmap_set_id = self.__parse_int()
 
