@@ -9,8 +9,12 @@ class CustomString:
 		elif byte == b'\x0b':
 			length = leb128.u.decode_reader(file)
 			# print(length)
-			characters = file.read(length[0])
-			self._str = str(characters, "utf-8")
+			if skip:
+				file.read(length[0])
+				self._str = ""
+			else:
+				characters = file.read(length[0])
+				self._str = str(characters, "utf-8")
 		else:
 			raise ValueError("Could not parse String")
 
